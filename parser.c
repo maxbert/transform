@@ -73,7 +73,10 @@ void parse_file ( char * filename,
     if(strcmp(line, 'line') == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      strsep(line, ' '
+      
+      strsep(line, ' ');
+      int i = 0;
+      while(line[i + 1] != null
   }
 }
   
