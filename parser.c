@@ -60,7 +60,14 @@ void parse_file ( char * filename,
   FILE *f;
   char line[256];
   clear_screen(s);
+  
+  color c;
 
+
+  c.red = 0;
+  c.green = MAX_COLOR;
+  c.blue = 0;
+  
   if ( strcmp(filename, "stdin") == 0 ) 
     f = stdin;
   else
@@ -73,10 +80,64 @@ void parse_file ( char * filename,
     if(strcmp(line, 'line') == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      
-      strsep(line, ' ');
-      int i = 0;
-      while(line[i + 1] != null
+      int x0 = atoi(strsep(line, ' '));
+      int y0 = atoi(strsep(line, ' '));
+      int z0 = atoi(strsep(line, ' '));
+      int x1 = atoi(strsep(line, ' '));
+      int y1 = atoi(strsep(line, ' '));
+      int z1 = atoi(strsep(line, ' '));
+      add_edge(edges,x0,y0,z0,x1,y1,z1);
+    }else if(strcmp(line, 'ident') == 0){
+      ident(transform); 
+    }else if (strcmp(line, 'scale') == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      double sx = atof(strsep(line, ' '));
+      double sy = atof(strsep(line, ' '));
+      double sz = atof(strsep(line, ' '));
+      struct matrix * s = make_scale(sx,sy,sz);
+      matrix_mult(s, transform);
+     
+    }else if  (strcmp(line, 'translate') == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      double tx = atof(strsep(line, ' '));
+      double ty = atof(strsep(line, ' '));
+      double tz = atof(strsep(line, ' '));
+      struct matrix * s = make_translate(tx,ty,tz);
+      matrix_mult(s, transform);
+    }else if  (strcmp(line, 'rotate') == 0){
+      fgets(line, 255, f);
+      line[strlen(line)-1]='\0';
+      char *axis = strsep(line, ' ');
+      double theta = atof(strsep(line, ' '));
+      struct matrix * s;
+      if(strcmp(axis,"z") == 0){
+	s = rotZ(theta);
+      } else if(strcmp(axis,"y") == 0){
+	s = rotY(theta);
+      } else if(strcmp(axis,"x") == 0){
+	s = rotX(theta);
+      } else if(strcmp(axis,"Z") == 0){
+	s = rotZ(theta);
+      } else if(strcmp(axis,"Y") == 0){
+	s = rotY(theta);
+      } else if(strcmp(axis,"X") == 0){
+	s = rotX(theta);
+      }  
+      matrix_mult(s, transform);
+    }else if(strcmp(line, 'apply') == 0){
+      matrix_mult(transform,edges);
+    }else if(strcmp(line, 'display') == 0){
+      draw_lines(edges,s,c);
+      display(s);
+    }else if(strcmp(line, 'save') == 0){
+      draw_lines(edges,s,c);
+      save_extension(s, "transform.png");
+    }else if(strcmp(line, 'quit') == 0){
+      return ;
+    }
   }
+  printf("done");
 }
   
