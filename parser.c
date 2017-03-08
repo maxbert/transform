@@ -77,7 +77,7 @@ void parse_file ( char * filename,
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
     
-    if(strcmp(line, 'line') == 0){
+    if(strcmp(line, "line") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
       int x0 = atoi(strsep(line, ' '));
@@ -87,9 +87,9 @@ void parse_file ( char * filename,
       int y1 = atoi(strsep(line, ' '));
       int z1 = atoi(strsep(line, ' '));
       add_edge(edges,x0,y0,z0,x1,y1,z1);
-    }else if(strcmp(line, 'ident') == 0){
+    }else if(strcmp(line, "ident") == 0){
       ident(transform); 
-    }else if (strcmp(line, 'scale') == 0){
+    }else if (strcmp(line, "scale") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
       double sx = atof(strsep(line, ' '));
@@ -98,7 +98,7 @@ void parse_file ( char * filename,
       struct matrix * s = make_scale(sx,sy,sz);
       matrix_mult(s, transform);
      
-    }else if  (strcmp(line, 'translate') == 0){
+    }else if  (strcmp(line, "translate") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
       double tx = atof(strsep(line, ' '));
@@ -106,35 +106,35 @@ void parse_file ( char * filename,
       double tz = atof(strsep(line, ' '));
       struct matrix * s = make_translate(tx,ty,tz);
       matrix_mult(s, transform);
-    }else if  (strcmp(line, 'rotate') == 0){
+    }else if  (strcmp(line, "rotate") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
       char *axis = strsep(line, ' ');
       double theta = atof(strsep(line, ' '));
       struct matrix * s;
       if(strcmp(axis,"z") == 0){
-	s = rotZ(theta);
+	s = make_rotZ(theta);
       } else if(strcmp(axis,"y") == 0){
-	s = rotY(theta);
+	s = make_rotY(theta);
       } else if(strcmp(axis,"x") == 0){
-	s = rotX(theta);
+	s = make_rotX(theta);
       } else if(strcmp(axis,"Z") == 0){
-	s = rotZ(theta);
+	s = make_rotZ(theta);
       } else if(strcmp(axis,"Y") == 0){
-	s = rotY(theta);
+	s = make_rotY(theta);
       } else if(strcmp(axis,"X") == 0){
-	s = rotX(theta);
+	s = make_rotX(theta);
       }  
       matrix_mult(s, transform);
-    }else if(strcmp(line, 'apply') == 0){
+    }else if(strcmp(line, "apply") == 0){
       matrix_mult(transform,edges);
-    }else if(strcmp(line, 'display') == 0){
+    }else if(strcmp(line, "display") == 0){
       draw_lines(edges,s,c);
       display(s);
-    }else if(strcmp(line, 'save') == 0){
+    }else if(strcmp(line, "save") == 0){
       draw_lines(edges,s,c);
       save_extension(s, "transform.png");
-    }else if(strcmp(line, 'quit') == 0){
+    }else if(strcmp(line, "quit") == 0){
       return ;
     }
   }
