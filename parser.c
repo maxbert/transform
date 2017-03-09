@@ -67,50 +67,58 @@ void parse_file ( char * filename,
   c.red = 0;
   c.green = MAX_COLOR;
   c.blue = 0;
-  
+  char *sp = " ";
   if ( strcmp(filename, "stdin") == 0 ) 
     f = stdin;
   else
     f = fopen(filename, "r");
-  
-  while ( fgets(line, 255, f) != NULL ) {
+  while (fgets(line, 255, f) != NULL ) {
     line[strlen(line)-1]='\0';
     printf(":%s:\n",line);
     
     if(strcmp(line, "line") == 0){
+      printf("adding line");
       fgets(line, 255, f);
+      
       line[strlen(line)-1]='\0';
-      int x0 = atoi(strsep(line, ' '));
-      int y0 = atoi(strsep(line, ' '));
-      int z0 = atoi(strsep(line, ' '));
-      int x1 = atoi(strsep(line, ' '));
-      int y1 = atoi(strsep(line, ' '));
-      int z1 = atoi(strsep(line, ' '));
+      printf(":%s:\n",line);
+      int x0 = 0;
+      int y0 = 0;
+      int z0 = 0;
+      int x1 = 0;
+      int y1 = 0;
+      int z1 = 0;
+      sscanf(line,"%d %d %d %d %d %d", &x0, &y0, &z0, &x1, &y1, &z1);
       add_edge(edges,x0,y0,z0,x1,y1,z1);
+      printf("test4\n");
     }else if(strcmp(line, "ident") == 0){
       ident(transform); 
     }else if (strcmp(line, "scale") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      double sx = atof(strsep(line, ' '));
-      double sy = atof(strsep(line, ' '));
-      double sz = atof(strsep(line, ' '));
+      double sx =1;
+      double sy=1;
+      double sz=1;
+      sscanf(line,"%lf %lf %lf", &sx, &sy, &sz);
+      printf("%f %f %f\n", sx, sy, sz);
       struct matrix * s = make_scale(sx,sy,sz);
       matrix_mult(s, transform);
      
-    }else if  (strcmp(line, "translate") == 0){
+    }else if  (strcmp(line, "move") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      double tx = atof(strsep(line, ' '));
-      double ty = atof(strsep(line, ' '));
-      double tz = atof(strsep(line, ' '));
+      double tx=0;
+      double ty=0;
+      double tz=0;
+      sscanf(line,"%lf %lf %lf", &tx, &ty, &tz);
       struct matrix * s = make_translate(tx,ty,tz);
       matrix_mult(s, transform);
     }else if  (strcmp(line, "rotate") == 0){
       fgets(line, 255, f);
       line[strlen(line)-1]='\0';
-      char *axis = strsep(line, ' ');
-      double theta = atof(strsep(line, ' '));
+      char axis[3];
+      double theta = 0;
+      sscanf(line,"%s %lf", axis, &theta);
       struct matrix * s;
       if(strcmp(axis,"z") == 0){
 	s = make_rotZ(theta);

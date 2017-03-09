@@ -1,51 +1,105 @@
 line
-0 0 0 100 0 0
+0 0 0 10 0 0
 line
-100 0 0 100 100 0
+10 0 0 15 90 0
 line
-100 100 0 0 100 0
+15 90 0 30 0 0
 line
-0 100 0 0 0 0
+30 0 0 40 0 0
 line
-0 0 100 100 0 100
+40 0 0 55 90 0
 line
-100 0 100 100 100 100
+55 90 0 60 0 0
 line
-100 100 100 0 100 100
+60 0 0 70 0 0
 line
-0 100 100 0 0 100
+70 0 0 65 100 0
 line
-0 0 0 0 0 100
+65 100 0 45 100 0
 line
-0 100 0 0 100 100
+45 100 0 35 10 0
 line
-100 100 0 100 100 100
+35 10 0 25 100 0
 line
-100 0 0 100 0 100
-display
+25 100 0 5 100 0
+line
+5 100 0 0 0 0
+
+line
+0 0 50 10 0 50
+line
+10 0 50 15 90 50
+line
+15 90 50 30 0 50
+line
+30 0 50 40 0 50
+line
+40 0 50 55 90 50
+line
+55 90 50 60 0 50
+line
+60 0 50 70 0 50
+line
+70 0 50 65 100 50
+line
+65 100 50 45 100 50
+line
+45 100 50 35 10 50
+line
+35 10 50 25 100 50
+line
+25 100 50 5 100 50
+line
+5 100 50 0 0 50
+
+line
+0 0 0 0 0 50
+line
+5 100 0 5 100 50
+line
+25 100 0 25 100 50
+line
+35 10 0 35 10 50
+line
+45 100 0 45 100 50
+line
+65 100 0 65 100 50
+line
+70 0 0 70 0 50
+line
+40 0 0 40 0 50
+line
+30 0 0 30 0 50
+line
+60 0 0 60 0 50
+line
+10 0 0 10 0 50
+
 ident
 scale
 2 2 2
 apply
-display
+
 ident
 move
-100 100 0
+200 200 0
 apply
-display
+
 ident
 rotate
-z 20
+z 10
 rotate
-x 20
+x 10
 rotate
-y 20
+y 10
 apply
-display
+
 ident
 rotate
-y 20
+z 3
 apply
-display
+
+
 save
-pic.png
+transform.png
+display
